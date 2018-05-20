@@ -1,28 +1,22 @@
 provider "aws" {
-  access_key = "${var.access_key}"
-  secret_key = "${var.secret_key}"
-  region     = "${var.region}"
+  access_key = "${var.Acccess_Key}"
+  secret_key = "${var.Secret_Key}"
+  region     = "${var.Region}"
 }
 
+// Creates the instance
 resource "aws_instance" "WordPress" {
-  ami           = "ami-ed3e0c88"
-  instance_type = "t2.micro"
+  ami           = "${var.AMI_ID}"
+  instance_type = "${var.Instance_Size}"
   security_groups = [
     "wordpress_SG"
   ]
-
-
-  connection {
-            user = "${var.username}"
-            type = "ssh"
-            private_key = "${file(var.ppk)}"
-        }
-
   monitoring = "true"
-  key_name = "WP_ec2_key"
+  key_name = "${var.Publlic_Key_Name}"
   depends_on = ["aws_security_group.wordpress_SG"]
 }
 
+// Creates the Security Group that will be associated to the instance. - SSH is set up on port 22.
 resource "aws_security_group" "wordpress_SG" {
   name        = "wordpress_SG"
   description = "Allow all inbound traffic"
@@ -34,6 +28,7 @@ resource "aws_security_group" "wordpress_SG" {
     cidr_blocks = ["0.0.0.0/0"]
   }
 
+  // SSH on Port 22
   ingress {
     from_port   = 22
     to_port     = 22
@@ -56,11 +51,13 @@ resource "aws_security_group" "wordpress_SG" {
   }
 }
 
+// Creates the Key Pair that the instance will be associated with
 resource "aws_key_pair" "WP_ec2_key" {
   key_name = "WP_ec2_key"
   public_key = "${file(var.path)}"
 }
 
+// An S3 bucket where all the WordPress Files can be Synced
 resource "aws_s3_bucket" "wp-filesync" {
   bucket = "wp-filesync"
   acl    = "private"
@@ -71,6 +68,7 @@ resource "aws_s3_bucket" "wp-filesync" {
   }
 }
 
-output "PuttyHostName" {
+// Outputs the Host name that can be used in Putty for a SSH connection
+output "HostName" {
   value = ["${var.username}","${aws_instance.WordPress.*.public_dns}"]
 }
