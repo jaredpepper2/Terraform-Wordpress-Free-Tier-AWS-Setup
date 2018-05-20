@@ -4,6 +4,8 @@ AWS docs provide a step to step guide for launching a WordPress site on the free
 
 These scripts perform this above setup, all in one go. Please install the Terraform client, perform the config changes and then run 'terraform apply', to build the WordPress infrastructure.
 
+**Terraform v0.11.7** used in this guide.
+
 ## What will Happen?
 
 These scripts will:
@@ -25,11 +27,11 @@ Once the t2.miro instance has stood up, please navigate to its public DNS (Found
 
 The only changes that need performing on the scripts are:
 
-- Fill in your AWS access key into the 'AWS_Keys_And_Region' file.
-- Fill in your AWS secret key into the 'AWS_Keys_And_Region' file.
-- Fill in your region into the 'AWS_Keys_And_Region' file.
-- Generate a public key and place is in the '/SSH_Keys/Public' folder.
-- Generate a private key (using your public key), and place it in the '/SSH_Keys/Private' folder
+- Fill in your AWS access key into the '**AWS_Keys_And_Region'**' file.
+- Fill in your AWS secret key into the ''**AWS_Keys_And_Region'**' file.
+- Fill in your region into the ''**AWS_Keys_And_Region'**' file.
+- Generate a public key and place is in the ''**/SSH_Keys/Public'**' folder. Call your key **'WP_ec2_key**'
+- Generate a private key (using your public key), and place it in the ''**/SSH_Keys/Private'**' folder Call your key '**WP_ec2_key.ppk**'
 
 Public keys can be generated from 'PuTTYgen' (Comes with the download of the PuTTY client). Private keys are created from your public keys. See the following guide for help on this.
 

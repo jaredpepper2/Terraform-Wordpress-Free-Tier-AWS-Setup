@@ -1,7 +1,7 @@
 
-// Enter the Path to where your generated Public Key is stored (Call it WP_ec2_key)
+// Enter the Path to where your generated Public Key is stored. Please fill in the path value (Directory of your Terraform Project).
 variable "path" {
-   default = "C:\\Users\\jared\\Documents\\Project Terraform\\SSH_Keys\\Public\\WP_ec2_key"
+   default = "XXXXXXX\\SSH_Keys\\Public\\WP_ec2_key"
 }
 
 // Public Key
